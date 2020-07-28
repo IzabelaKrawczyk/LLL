@@ -1,9 +1,13 @@
 package main.java;
 
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import java.awt.*;
 import java.text.DecimalFormat;
+
+import static java.awt.Font.PLAIN;
 
 public class LLLForm extends javax.swing.JFrame {
 
@@ -11,8 +15,6 @@ public class LLLForm extends javax.swing.JFrame {
         initComponents();
     }
 
-
-    @SuppressWarnings("unchecked")
 
     private void initComponents() {
 
@@ -70,7 +72,7 @@ public class LLLForm extends javax.swing.JFrame {
         jPanelBasisReduction.setMinimumSize(new java.awt.Dimension(448, 340));
         jPanelBasisReduction.setPreferredSize(new java.awt.Dimension(448, 340));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", PLAIN, 12)); // NOI18N
         jLabel3.setText("Basis matrix");
 
         jTableBasis.setModel(new javax.swing.table.DefaultTableModel(
@@ -99,24 +101,16 @@ public class LLLForm extends javax.swing.JFrame {
         ));
         jScrollPaneReducedBasis.setViewportView(jTableReducedBasis);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", PLAIN, 12)); // NOI18N
         jLabel5.setText("Reduced matrix ");
 
         jButtonLLLalgorithm.setText("LLL algorithm");
         jButtonLLLalgorithm.setToolTipText("");
-        jButtonLLLalgorithm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLLLalgorithmActionPerformed(evt);
-            }
-        });
+        jButtonLLLalgorithm.addActionListener(this::jButtonLLLalgorithmActionPerformed);
 
         jButtonClear.setText("Clear");
         jButtonClear.setActionCommand("Clear ");
-        jButtonClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonClearActionPerformed(evt);
-            }
-        });
+        jButtonClear.addActionListener(this::jButtonClearActionPerformed);
 
         jLabel6.setText("Number of dimensions:");
 
@@ -195,35 +189,27 @@ public class LLLForm extends javax.swing.JFrame {
 
         jPanelFactorization.setPreferredSize(new java.awt.Dimension(448, 561));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", PLAIN, 12)); // NOI18N
         jLabel1.setText("Polynomial: ");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", Font.BOLD, 12)); // NOI18N
         jLabel4.setText("x: ");
 
         jTFOutputValue.setEditable(false);
-        jTFOutputValue.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTFOutputValue.setFont(new java.awt.Font("Tahoma", Font.BOLD, 12)); // NOI18N
 
-        jButtonShowValue.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButtonShowValue.setFont(new java.awt.Font("Tahoma", PLAIN, 12)); // NOI18N
         jButtonShowValue.setText("Show polynomial value of x");
-        jButtonShowValue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonShowValueActionPerformed(evt);
-            }
-        });
+        jButtonShowValue.addActionListener(this::jButtonShowValueActionPerformed);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", PLAIN, 12)); // NOI18N
         jLabel2.setText("Factorization output: ");
 
         jTextFieldFactorizationOutput.setEditable(false);
-        jTextFieldFactorizationOutput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextFieldFactorizationOutput.setFont(new java.awt.Font("Tahoma", PLAIN, 12)); // NOI18N
 
         jButtonClearF.setLabel("Clear");
-        jButtonClearF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonClearFActionPerformed(evt);
-            }
-        });
+        jButtonClearF.addActionListener(this::jButtonClearFActionPerformed);
 
         jTablePolynomial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -238,18 +224,10 @@ public class LLLForm extends javax.swing.JFrame {
         jLabel7.setText("Choose the degree of polynomial: ");
 
         Button_OK_Degree.setText("OK");
-        Button_OK_Degree.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button_OK_DegreeActionPerformed(evt);
-            }
-        });
+        Button_OK_Degree.addActionListener(this::Button_OK_DegreeActionPerformed);
 
         Button_ShowFactorizedPol.setText("Show factorized polynomial");
-        Button_ShowFactorizedPol.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button_ShowFactorizedPolActionPerformed(evt);
-            }
-        });
+        Button_ShowFactorizedPol.addActionListener(this::Button_ShowFactorizedPolActionPerformed);
 
         javax.swing.GroupLayout jPanelFactorizationLayout = new javax.swing.GroupLayout(jPanelFactorization);
         jPanelFactorization.setLayout(jPanelFactorizationLayout);
@@ -362,21 +340,21 @@ public class LLLForm extends javax.swing.JFrame {
                 }
             }
             long start = System.nanoTime();
-            LLL.integral_LLL(reducedBasis,rows,cols);
+            LLLReduce reduced=new LLLReduce(reducedBasis);
             long elapsedTime = System.nanoTime() - start;
 
             for(int i=0;i<rows;i++) {
                 for (int j = 0; j < cols; j++) {
-                    jTableReducedBasis.setValueAt(reducedBasis[i][j],i,j);
+                    jTableReducedBasis.setValueAt(reduced.reducedBasis[i][j],i,j);
                 }
             }
             jTextFieldTotalTime.setText(String.valueOf(elapsedTime));
         }
 
 
-    }//GEN-LAST:event_jButtonLLLalgorithmActionPerformed
+    }
 
-    private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearActionPerformed
+    private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {
 
           if(!jTFRows.getText().equals("") && !jTFColumns.getText().equals("")){
             int rows= Integer.parseInt(jTFRows.getText());
@@ -414,7 +392,7 @@ public class LLLForm extends javax.swing.JFrame {
             value+=coef*Math.pow(x,i);
         }
         DecimalFormat df = new DecimalFormat("#.####");
-        value = Double.valueOf(df.format(value));
+        value = Double.parseDouble(df.format(value));
 
         jTFOutputValue.setText(String.valueOf(value));
     }
@@ -434,7 +412,7 @@ public class LLLForm extends javax.swing.JFrame {
     }
 
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -443,23 +421,12 @@ public class LLLForm extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LLLForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LLLForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LLLForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(LLLForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
 
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LLLForm().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new LLLForm().setVisible(true));
     }
 
     private javax.swing.JButton Button_OK_Degree;
