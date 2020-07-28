@@ -339,19 +339,22 @@ public class LLLForm extends javax.swing.JFrame {
                     reducedBasis[i][j]=Integer.parseInt(String.valueOf(basis[i][j]));
                 }
             }
-            long start = System.nanoTime();
-            LLLReduce reduced=new LLLReduce(reducedBasis);
-            long elapsedTime = System.nanoTime() - start;
 
-            for(int i=0;i<rows;i++) {
-                for (int j = 0; j < cols; j++) {
-                    jTableReducedBasis.setValueAt(reduced.reducedBasis[i][j],i,j);
+            try {
+                long start = System.nanoTime();
+                LLLReduce reduced=new LLLReduce(reducedBasis);
+                long elapsedTime = System.nanoTime() - start;
+
+                for(int i=0;i<rows;i++) {
+                    for (int j = 0; j < cols; j++) {
+                        jTableReducedBasis.setValueAt(reduced.reducedBasis[i][j],i,j);
+                    }
                 }
+                jTextFieldTotalTime.setText(String.valueOf(elapsedTime));
+            } catch (IllegalArgumentException e){
+                jLabelErroText.setText("Vectors in the basis matrix aren't lineary independent!");
             }
-            jTextFieldTotalTime.setText(String.valueOf(elapsedTime));
         }
-
-
     }
 
     private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {

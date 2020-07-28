@@ -7,11 +7,8 @@ public class HelloLLL {
 
         int[][] basis;
         basis = new int[][]{{1, 5,2,8,9,10}, {0,6,1,0,0,7 }, {3, 7, 3,5,3,0}};
-       LLLReduce reduced= new LLLReduce(basis);
-       System.out.print(reduced);
-
+        LLLReduce reduced= new LLLReduce(basis);
+        System.out.print(reduced);
+        //System.out.println(Vector.rankOfMatrix(basis));
     }
-
-
-
 }

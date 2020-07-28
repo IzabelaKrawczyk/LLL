@@ -29,6 +29,8 @@ public class LLLReduce {
     }
 
     public LLLReduce(int[][] basis) {
+        int rank=Vector.rankOfMatrix(basis);
+        if(rank != basis.length) throw new IllegalArgumentException("Vectors aren't linear independant!");
         delta=0.75;
         reducedBasis=new int[basis.length][basis[0].length];
         System.arraycopy(basis, 0, reducedBasis, 0, basis.length);
@@ -57,6 +59,8 @@ public class LLLReduce {
     }
 
     public LLLReduce(int[][] basis, double delta) {
+        int rank=Vector.rankOfMatrix(basis);
+        if(rank != basis.length) throw new IllegalArgumentException("Vectors aren't linear independant!");
         reducedBasis=new int[basis.length][basis[0].length];
         System.arraycopy(basis, 0, reducedBasis, 0, basis.length);
 

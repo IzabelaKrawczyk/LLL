@@ -30,9 +30,9 @@ public class LLLReduceTest {
         }
     }
 
-    /*@Test(expected = RuntimeException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void throwsException() {
         int[][] basis=new int[][]{{1, 5,2}, {0,6,1 }, {3, 7, 3},{1,2,3}};
         LLLReduce reduced=new LLLReduce(basis);
-    }*/
+    }
 }
