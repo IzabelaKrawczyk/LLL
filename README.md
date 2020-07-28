@@ -1,1 +1,1 @@
-# LLL
+# LLL reduced basis algorithm 
